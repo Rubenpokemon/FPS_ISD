@@ -50,6 +50,11 @@ const OBJECT_THROW_FORCE = 120
 const OBJECT_GRAB_DISTANCE = 7
 const OBJECT_GRAB_RAY_DISTANCE = 10
 
+const RESPAWN_TIME = 4
+var dead_time = 0
+var is_dead = false
+
+var globals
 func _ready():
 	camera = $Rotation_Helper/Camera
 	rotation_helper = $Rotation_Helper
@@ -78,13 +83,22 @@ func _ready():
 	UI_status_label = $HUD/Panel/Gun_label
 	flashlight = $Rotation_Helper/Flashlight
 
+	globals = get_node("/root/Globals")
+	global_transform.origin = globals.get_respawn_position()
 
 func _physics_process(delta):
-	process_input(delta)
-	process_movement(delta)
-	process_changing_weapons(delta)
-	process_reloading(delta)
+
+	if !is_dead:
+		process_input(delta)
+		#process_view_input(delta)
+		process_movement(delta)
+
+	if (grabbed_object == null):
+		process_changing_weapons(delta)
+		process_reloading(delta)
+
 	process_UI(delta)
+	process_respawn(delta)
 
 func process_input(delta):	
 #Sprint
@@ -172,11 +186,8 @@ func process_input(delta):
 
 	# ----------------------------------
 	# Capturing/Freeing the cursor
-	if Input.is_action_just_pressed("ui_cancel"):
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	# ----------------------------------
 
 # ----------------------------------
@@ -382,3 +393,58 @@ func add_grenade(additional_grenade):
 
 func bullet_hit(damage, bullet_hit_pos):
 	health -= damage
+
+func process_respawn(delta):
+
+	# If we've just died
+	if health <= 0 and !is_dead:
+		$Body_CollisionShape.disabled = true
+		$Feet_CollisionShape.disabled = true
+
+		changing_weapon = true
+		changing_weapon_name = "UNARMED"
+
+		$HUD/Death_Screen.visible = true
+
+		$HUD/Panel.visible = false
+		$HUD/Crosshair.visible = false
+
+		dead_time = RESPAWN_TIME
+		is_dead = true
+
+		if grabbed_object != null:
+			grabbed_object.mode = RigidBody.MODE_RIGID
+			grabbed_object.apply_impulse(Vector3(0, 0, 0), -camera.global_transform.basis.z.normalized() * OBJECT_THROW_FORCE / 2)
+
+			grabbed_object.collision_layer = 1
+			grabbed_object.collision_mask = 1
+
+			grabbed_object = null
+
+	if is_dead:
+		dead_time -= delta
+
+		var dead_time_pretty = str(dead_time).left(3)
+		$HUD/Death_Screen/Label.text = "You died\n" + dead_time_pretty + " seconds till respawn"
+
+		if dead_time <= 0:
+			global_transform.origin = globals.get_respawn_position()
+
+			$Body_CollisionShape.disabled = false
+			$Feet_CollisionShape.disabled = false
+
+			$HUD/Death_Screen.visible = false
+
+			$HUD/Panel.visible = true
+			$HUD/Crosshair.visible = true
+
+			for weapon in weapons:
+				var weapon_node = weapons[weapon]
+				if weapon_node != null:
+					weapon_node.reset_weapon()
+
+			health = 100
+			grenade_amounts = {"Grenade":2, "Sticky Grenade":2}
+			current_grenade = "Grenade"
+
+			is_dead = false
