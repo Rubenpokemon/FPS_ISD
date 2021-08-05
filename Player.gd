@@ -88,9 +88,9 @@ func _ready():
 
 func _physics_process(delta):
 
-	if !is_dead:
+	if !is_dead: 
 		process_input(delta)
-		#process_view_input(delta)
+	   # process_view_input(delta)
 		process_movement(delta)
 
 	if (grabbed_object == null):
@@ -296,6 +296,10 @@ func process_movement(delta):
 
 
 func _input(event):
+
+	if is_dead: #Stops code when dead
+		return
+
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		rotation_helper.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY))
 		self.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1))

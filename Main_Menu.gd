@@ -54,14 +54,16 @@ func level_select_menu_button_pressed(button_name):
 		level_select_menu.visible = false
 	elif button_name == "testing_scene":
 		set_mouse_and_joypad_sensitivity()
-		get_node("/root/Globals").load_new_scene(testing_area_scene)
+		get_tree().change_scene("res://Testing_Area.tscn")
+		#get_node("/root/Globals").load_new_scene(testing_area_scene)
 	elif button_name == "space_level":
 		set_mouse_and_joypad_sensitivity()
-		get_node("/root/Globals").load_new_scene(space_level_scene)
+		#get_node("/root/Globals").load_new_scene(space_level_scene)
+		get_tree().change_scene("res://assets/Space_Level_Objects/Space_Level.tscn")
 	elif button_name == "ruins_level":
 		set_mouse_and_joypad_sensitivity()
-		get_node("/root/Globals").load_new_scene(ruins_level_scene)
-
+		#get_node("/root/Globals").load_new_scene(ruins_level_scene)
+		get_tree().change_scene("res://assets/Ruin_Level_Objects/Ruins_Level.tscn")
 
 func options_menu_button_pressed(button_name):
 	if button_name == "back":

@@ -153,7 +153,6 @@ func body_exited_vision(body):
 
 
 func bullet_hit(damage, bullet_hit_pos):
-	print ("Turret Hit 2")
 	turret_health -= damage
 
 	if turret_health <= 0:

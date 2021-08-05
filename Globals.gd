@@ -2,17 +2,20 @@ extends Node
 
 var mouse_sensitivity = 0.08
 var joypad_sensitivity = 2
-
+var respawn_points = null
 const MAIN_MENU_PATH = "res://Main_Menu.tscn"
 const POPUP_SCENE = preload("res://Pause_Popup.tscn")
 var popup = null
 
+
 func _ready():
 	canvas_layer = CanvasLayer.new()
 	add_child(canvas_layer)
+	randomize()
 
 func load_new_scene(new_scene_path):
 	get_tree().change_scene(new_scene_path)
+	respawn_points = null
 
 # ------------------------------------
 # All the GUI/UI-related variables
@@ -66,3 +69,10 @@ func popup_quit():
 		popup = null
 
 	load_new_scene(MAIN_MENU_PATH)
+
+func get_respawn_position():
+	if respawn_points == null:
+		return Vector3(0, 0, 0)
+	else:
+		var respawn_point = rand_range(0, respawn_points.size() - 1)
+		return respawn_points[respawn_point].global_transform.origin
