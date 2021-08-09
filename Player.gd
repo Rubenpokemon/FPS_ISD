@@ -90,7 +90,7 @@ func _physics_process(delta):
 
 	if !is_dead: 
 		process_input(delta)
-	   # process_view_input(delta)
+		# process_view_input(delta)
 		process_movement(delta)
 
 	if (grabbed_object == null):
@@ -304,7 +304,7 @@ func _input(event):
 		rotation_helper.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY))
 		self.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1))
 
-		var camera_rot = rotation_helper.rotation_degrees
+		var camera_rot = rotation_helper.rotation_degrees #Rotates the camera
 		camera_rot.x = clamp(camera_rot.x, -70, 70)
 		rotation_helper.rotation_degrees = camera_rot
 
@@ -325,7 +325,7 @@ func _input(event):
 						changing_weapon = true
 						mouse_scroll_value = round_mouse_scroll_value
 
-func process_changing_weapons(delta):
+func process_changing_weapons(delta): #Changing Weapons
 	if changing_weapon == true:
 
 		var weapon_unequipped = false
@@ -357,8 +357,8 @@ func process_changing_weapons(delta):
 				current_weapon_name = changing_weapon_name
 				changing_weapon_name = ""
 
-func fire_bullet():
-	if changing_weapon == true:
+func fire_bullet(): 
+	if changing_weapon == true: #Doesn't shoot if you are changing weapons
 		return
 
 	weapons[current_weapon_name].fire_weapon()
@@ -375,27 +375,27 @@ func process_UI(delta):
 				"\nAMMO: " + str(current_weapon.ammo_in_weapon) + "/" + str(current_weapon.spare_ammo) + \
 				"\n" + current_grenade + ": " + str(grenade_amounts[current_grenade])
 
-func process_reloading(delta):
-	if reloading_weapon == true:
+func process_reloading(delta): #Reloading
+	if reloading_weapon == true: 
 		var current_weapon = weapons[current_weapon_name]
-		if current_weapon != null:
+		if current_weapon != null: 
 			current_weapon.reload_weapon()
 		reloading_weapon = false
 
-func add_health(additional_health):
+func add_health(additional_health): #Health kit pick up
 	health += additional_health
 	health = clamp(health, 0, MAX_HEALTH)
 
-func add_ammo(additional_ammo):
+func add_ammo(additional_ammo): #Ammo box regening amma
 	if (current_weapon_name != "UNARMED"):
 		if (weapons[current_weapon_name].CAN_REFILL == true):
 			weapons[current_weapon_name].spare_ammo += weapons[current_weapon_name].AMMO_IN_MAG * additional_ammo
 
-func add_grenade(additional_grenade):
+func add_grenade(additional_grenade): #Ammo box regening grenades
 	grenade_amounts[current_grenade] += additional_grenade
 	grenade_amounts[current_grenade] = clamp(grenade_amounts[current_grenade], 0, 4)
 
-func bullet_hit(damage, bullet_hit_pos):
+func bullet_hit(damage, bullet_hit_pos): #Getting Hit
 	health -= damage
 
 func process_respawn(delta):
@@ -425,13 +425,13 @@ func process_respawn(delta):
 
 			grabbed_object = null
 
-	if is_dead:
+	if is_dead: #Respawm Timer going down
 		dead_time -= delta
 
 		var dead_time_pretty = str(dead_time).left(3)
 		$HUD/Death_Screen/Label.text = "You died\n" + dead_time_pretty + " seconds till respawn"
 
-		if dead_time <= 0:
+		if dead_time <= 0: #Respawns when timer goes out
 			global_transform.origin = globals.get_respawn_position()
 
 			$Body_CollisionShape.disabled = false
@@ -441,8 +441,8 @@ func process_respawn(delta):
 
 			$HUD/Panel.visible = true
 			$HUD/Crosshair.visible = true
-
-			for weapon in weapons:
+ 
+			for weapon in weapons: #Sets up the weapons
 				var weapon_node = weapons[weapon]
 				if weapon_node != null:
 					weapon_node.reset_weapon()

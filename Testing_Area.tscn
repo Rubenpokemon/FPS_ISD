@@ -371,7 +371,7 @@ mesh = SubResource( 9 )
 material/0 = SubResource( 12 )
 
 [node name="Ball" parent="Cubes" instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.602769, 30.1218, 0.911361 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719171, 30.0737, 1.22492 )
 mass = 0.00102041
 
 [node name="Ammo_Pickup" parent="." instance=ExtResource( 3 )]
