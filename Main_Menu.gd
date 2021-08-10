@@ -4,7 +4,7 @@ var start_menu
 var level_select_menu
 var options_menu
 
-export (String, FILE) var testing_area_scene
+export (String, "res://Testing_Area") var testing_area_scene
 export (String, FILE) var space_level_scene
 export (String, FILE) var ruins_level_scene
 

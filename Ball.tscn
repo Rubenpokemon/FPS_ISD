@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/RigidBody_hit_test.gd" type="Script" id=1]
 [ext_resource path="res://assets/Images/Ranboo.jpg" type="Texture" id=2]
@@ -14,6 +14,16 @@ radius = 3.10006
 [sub_resource type="SpatialMaterial" id=4]
 albedo_texture = ExtResource( 2 )
 
+[sub_resource type="SpatialMaterial" id=6]
+albedo_color = Color( 0.568627, 0, 0.560784, 1 )
+
+[sub_resource type="CubeMesh" id=5]
+material = SubResource( 6 )
+size = Vector3( 1, 1, 1 )
+
+[sub_resource type="Curve" id=7]
+_data = [ Vector2( 0.020202, 0.0636363 ), 0.0, 0.0, 0, 0, Vector2( 0.5, 1 ), 2.01165, 0.0, 0, 0 ]
+
 [node name="Ball" type="RigidBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.602769, -2.80529, 0.911361 )
 mass = 0.01
@@ -27,3 +37,18 @@ shape = SubResource( 2 )
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
 mesh = SubResource( 3 )
 material/0 = SubResource( 4 )
+
+[node name="CPUParticles" type="CPUParticles" parent="."]
+transform = Transform( 8.95244, 0, 0, 0, 8.95244, 0, 0, 0, 8.95244, 0.214873, 0.193329, 0.0259261 )
+amount = 5
+lifetime = 0.5
+randomness = 1.0
+local_coords = false
+mesh = SubResource( 5 )
+emission_shape = 1
+emission_sphere_radius = 0.45
+spread = 180.0
+gravity = Vector3( 0, -10, 0 )
+scale_amount_random = 1.0
+scale_amount_curve = SubResource( 7 )
+color = Color( 0, 0, 0, 1 )

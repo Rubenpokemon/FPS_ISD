@@ -33,6 +33,8 @@ func fire_weapon():
 	clone.BULLET_DAMAGE = DAMAGE
 	ammo_in_weapon -= 1
 
+	player_node.create_sound("Pistol_shot", self.global_transform.origin)
+
 func equip_weapon():
 	if player_node.animation_manager.current_state == IDLE_ANIM_NAME:
 		is_weapon_enabled = true
@@ -55,6 +57,7 @@ func unequip_weapon():
 		return false
 
 func reload_weapon():
+	player_node.create_sound("Gun_cock", player_node.camera.global_transform.origin)
 	var can_reload = false
 
 	if player_node.animation_manager.current_state == IDLE_ANIM_NAME:

@@ -5,7 +5,7 @@ const GRENADE_AMOUNTS = [2, 0]
 # 0 = full size pickup, 1 = small pickup
 const AMMO_AMOUNTS = [4, 1]
 
-const RESPAWN_TIME = 20
+const RESPAWN_TIME = 10
 var respawn_timer = 0
 
 var is_ready = false

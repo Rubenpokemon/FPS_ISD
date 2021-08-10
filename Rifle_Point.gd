@@ -34,6 +34,8 @@ func fire_weapon():
 		elif body.has_method("bullet_hit"):
 			body.bullet_hit(DAMAGE, ray.global_transform)
 
+	player_node.create_sound("Rifle_shot", ray.global_transform.origin)
+
 func equip_weapon():
 	if player_node.animation_manager.current_state == IDLE_ANIM_NAME:
 		is_weapon_enabled = true
@@ -57,6 +59,7 @@ func unequip_weapon():
 	return false
 
 func reload_weapon():
+	player_node.create_sound("Gun_cock", player_node.camera.global_transform.origin)
 	var can_reload = false
 
 	if player_node.animation_manager.current_state == IDLE_ANIM_NAME:

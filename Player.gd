@@ -452,3 +452,8 @@ func process_respawn(delta):
 			current_grenade = "Grenade"
 
 			is_dead = false
+
+
+
+func create_sound(sound_name, position=null):
+	globals.play_sound(sound_name, false, position)
