@@ -14,11 +14,11 @@ radius = 3.10006
 [sub_resource type="SpatialMaterial" id=4]
 albedo_texture = ExtResource( 2 )
 
-[sub_resource type="SpatialMaterial" id=6]
+[sub_resource type="SpatialMaterial" id=5]
 albedo_color = Color( 0.568627, 0, 0.560784, 1 )
 
-[sub_resource type="CubeMesh" id=5]
-material = SubResource( 6 )
+[sub_resource type="CubeMesh" id=6]
+material = SubResource( 5 )
 size = Vector3( 1, 1, 1 )
 
 [sub_resource type="Curve" id=7]
@@ -44,7 +44,7 @@ amount = 5
 lifetime = 0.5
 randomness = 1.0
 local_coords = false
-mesh = SubResource( 5 )
+mesh = SubResource( 6 )
 emission_shape = 1
 emission_sphere_radius = 0.45
 spread = 180.0

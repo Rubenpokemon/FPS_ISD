@@ -7,6 +7,8 @@ var options_menu
 export (String, "res://Testing_Area") var testing_area_scene
 export (String, FILE) var space_level_scene
 export (String, FILE) var ruins_level_scene
+export (String, FILE) var doom_level_scene
+
 
 func _ready():
 	start_menu = $Start_Menu
@@ -22,6 +24,7 @@ func _ready():
 	$Level_Select_Menu/Button_Level_Testing_Area.connect("pressed", self, "level_select_menu_button_pressed", ["testing_scene"])
 	$Level_Select_Menu/Button_Level_Space.connect("pressed", self, "level_select_menu_button_pressed", ["space_level"])
 	$Level_Select_Menu/Button_Level_Ruins.connect("pressed", self, "level_select_menu_button_pressed", ["ruins_level"])
+	$Level_Select_Menu/Doom_Level.connect("pressed", self, "level_select_menu_button_pressed", ["doom_level"])
 
 	$Options_Menu/Button_Back.connect("pressed", self, "options_menu_button_pressed", ["back"])
 	$Options_Menu/Button_Fullscreen.connect("pressed", self, "options_menu_button_pressed", ["fullscreen"])
@@ -64,6 +67,11 @@ func level_select_menu_button_pressed(button_name):
 		set_mouse_and_joypad_sensitivity()
 		#get_node("/root/Globals").load_new_scene(ruins_level_scene)
 		get_tree().change_scene("res://assets/Ruin_Level_Objects/Ruins_Level.tscn")
+	elif button_name == "doom_level":
+		set_mouse_and_joypad_sensitivity()
+		#get_node("/root/Globals").load_new_scene(ruins_level_scene)
+		get_tree().change_scene("res://Doom_Level.tscn")
+
 
 func options_menu_button_pressed(button_name):
 	if button_name == "back":

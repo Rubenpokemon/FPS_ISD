@@ -13,7 +13,7 @@ const MOUSE_SENSITIVITY_SCROLL_WHEEL = 0.08
 const GRAVITY = -24.8
 var vel = Vector3()
 const MAX_SPEED = 20
-const JUMP_SPEED = 18
+const JUMP_SPEED = 22    #18
 const ACCEL = 4.5
 
 var dir = Vector3()
@@ -297,10 +297,10 @@ func process_movement(delta):
 
 func _input(event):
 
-	if is_dead: #Stops code when dead
+	if is_dead: #Returns if dead
 		return
 
-	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED: #Rotates Camera
 		rotation_helper.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY))
 		self.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1))
 

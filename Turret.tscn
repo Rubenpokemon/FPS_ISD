@@ -256,7 +256,6 @@ shape = SubResource( 8 )
 
 [node name="Smoke" type="Particles" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85465, 0.50817 )
-emitting = false
 amount = 64
 lifetime = 1.4
 visibility_aabb = AABB( -3.64419, -2.44026, -2.50963, 7.57765, 16.6094, 7.38895 )

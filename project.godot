@@ -10,13 +10,12 @@ config_version=4
 
 _global_script_classes=[  ]
 _global_script_class_icons={
-
 }
 
 [application]
 
 config/name="Godot FPS"
-run/main_scene="res://Testing_Area.tscn"
+run/main_scene="res://Doom_Level.tscn"
 config/icon="res://icon.png"
 
 [autoload]

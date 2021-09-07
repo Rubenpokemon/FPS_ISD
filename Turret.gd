@@ -76,6 +76,7 @@ func _physics_process(delta):
 
 			node_turret_head.look_at(current_target.global_transform.origin + Vector3(0, PLAYER_HEIGHT, 0), Vector3(0, 1, 0))
 
+
 			if turret_health > 0:
 
 				if ammo_in_turret > 0:

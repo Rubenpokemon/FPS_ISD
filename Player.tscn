@@ -3894,7 +3894,9 @@ size = 42
 use_filter = true
 font_data = ExtResource( 8 )
 
-[node name="Player" type="KinematicBody"]
+[node name="Player" type="KinematicBody" groups=[
+"Player",
+]]
 script = ExtResource( 9 )
 
 [node name="Body_CollisionShape" type="CollisionShape" parent="."]
@@ -4193,6 +4195,9 @@ margin_right = 2.5
 margin_bottom = 20.5
 texture = ExtResource( 7 )
 expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Top_IMG" type="TextureRect" parent="HUD/Crosshair"]
 anchor_left = 0.5
