@@ -398,6 +398,9 @@ func add_grenade(additional_grenade): #Ammo box regening grenades
 func bullet_hit(damage, bullet_hit_pos): #Getting Hit
 	health -= damage
 
+func hit(damage):
+	health -= damage
+
 func process_respawn(delta):
 
 	# If we've just died

@@ -15,17 +15,17 @@ func _on_Sight_body_entered(body):
 	if body.is_in_group("Player"):
 		$Attack.start()
 		target = body
-		print (target)
 
 
 func _process(delta):
 	if target:
-		if move == "None": #look at player while not attacking
+		if move == "None": #Move towards player while not attacking
 			look_at(target.global_transform.origin, Vector3.UP)
 			rotation_degrees.x = 0
 			direction = (target.transform.origin - transform.origin).normalized()
 			direction.y = 0
 			move_and_slide(direction * (speed/4) * delta, Vector3.UP)
+
 		if move == "Flamethrower": #Spain without the a
 			rotate_y(delta * spin) 
 
@@ -42,7 +42,7 @@ func Tackle():
 
 func _on_Flamethrower_body_entered(body):
 	if body.is_in_group("Player"):
-		print ("Laser Hit")
+		body.hit(10)
 
 func _on_Spin_timeout():
 #	if spin >= 1: #If spin is positive
@@ -65,7 +65,7 @@ func end_move():
 
 func _on_Attack_timeout():
 	if move == "None":
-		var rng = randi()%3
+		var rng = randi()%2
 		if rng == 0:
 			$Spin.start()
 			move = "Flamethrower"
@@ -75,3 +75,15 @@ func _on_Attack_timeout():
 		else:
 			Tackle()
 			move = "Tackle"
+
+
+func _on_Bite_Range_body_entered(body):
+	if body.is_in_group("Player"):
+		$Bite.start()
+		body.hit(1)
+
+func _on_Bite_timeout():
+	var overlap = $Bite_Range.get_overlapping_bodies()
+	if overlap.has(target):
+		print ("Bite")
+		$Bite.start()
