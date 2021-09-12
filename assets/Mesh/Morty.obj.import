@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Morty.obj-9fd55e8c574264dc9dffff722565669f.mesh"
+
+[deps]
+
+files=[ "res://.import/Morty.obj-9fd55e8c574264dc9dffff722565669f.mesh" ]
+
+source_file="res://assets/Mesh/Morty.obj"
+dest_files=[ "res://.import/Morty.obj-9fd55e8c574264dc9dffff722565669f.mesh", "res://.import/Morty.obj-9fd55e8c574264dc9dffff722565669f.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
