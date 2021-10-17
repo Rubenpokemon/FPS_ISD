@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Vent.obj-0fb9f87cb0d88f51e8511d52f3e0df29.mesh"
+
+[deps]
+
+files=[ "res://.import/Vent.obj-0fb9f87cb0d88f51e8511d52f3e0df29.mesh" ]
+
+source_file="res://assets/Mesh/Vent.obj"
+dest_files=[ "res://.import/Vent.obj-0fb9f87cb0d88f51e8511d52f3e0df29.mesh", "res://.import/Vent.obj-0fb9f87cb0d88f51e8511d52f3e0df29.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

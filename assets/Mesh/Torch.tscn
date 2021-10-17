@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/Mesh/Torch.obj" type="ArrayMesh" id=1]
+
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 0.0340909 ), 0.0, 0.0, 0, 0, Vector2( 0.815789, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=5]
+curve = SubResource( 4 )
+
+[sub_resource type="ParticlesMaterial" id=1]
+emission_shape = 2
+emission_box_extents = Vector3( 1, 1, 1 )
+gravity = Vector3( 0, 4, 1.882 )
+scale = 0.5
+scale_random = 1.0
+scale_curve = SubResource( 5 )
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.756863, 0.396078, 0.0156863, 1 )
+
+[sub_resource type="CubeMesh" id=3]
+material = SubResource( 2 )
+size = Vector3( 0.5, 0.5, 0.5 )
+
+[node name="Torch" type="MeshInstance"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 39.0513, 11.9795, 12.924 )
+mesh = ExtResource( 1 )
+material/0 = null
+material/1 = null
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.131874, 4.87652, 1.26688 )
+light_color = Color( 0.827451, 0.545098, 0, 1 )
+light_energy = 3.6
+light_indirect_energy = 0.0
+light_specular = 0.0
+omni_range = 51.2
+
+[node name="Particles" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00728512, 4.88505, 1.08076 )
+amount = 19
+lifetime = 1.4
+speed_scale = 0.5
+visibility_aabb = AABB( -0.116831, -1.67759, -0.0145651, 0.233661, 0.324909, 0.108232 )
+process_material = SubResource( 1 )
+draw_pass_1 = SubResource( 3 )

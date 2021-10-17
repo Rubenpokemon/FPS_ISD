@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/Space_Level_Objects/Metal_Two.material" type="Material" id=1]
-[ext_resource path="res://assets/Space_Level_Objects/Emissive_White.material" type="Material" id=2]
+[ext_resource path="res://assets/Space_Level_Objects/Emissive_Pink.material" type="Material" id=2]
 
 [sub_resource type="ArrayMesh" id=14]
 

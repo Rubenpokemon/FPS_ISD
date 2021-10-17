@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://assets/Colors.material" type="Material" id=1]
 [ext_resource path="res://assets/Emission.material" type="Material" id=2]
@@ -13,6 +13,10 @@
 [ext_resource path="res://Weapon_Pistol.gd" type="Script" id=11]
 [ext_resource path="res://Rifle_Point.gd" type="Script" id=12]
 [ext_resource path="res://Knife_Point.gd" type="Script" id=13]
+[ext_resource path="res://assets/Images/Diglett.png" type="Texture" id=14]
+[ext_resource path="res://assets/Images/BunearyText.png" type="Texture" id=15]
+[ext_resource path="res://Text.gd" type="Script" id=16]
+[ext_resource path="res://assets/Images/Morty.png" type="Texture" id=17]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 1.2
@@ -3878,7 +3882,7 @@ tracks/34/enabled = true
 tracks/34/keys = PoolRealArray( 0, 1, 1.01328e-06, -7.3202e-07, -4.39584e-07, 0.279726, 0.0140126, -0.0783186, 0.956778, 1, 1, 1, 0.0666667, 1, 2.38419e-07, -7.00355e-07, -7.45058e-09, 0.268242, 0.00808504, -0.0800044, 0.95999, 1, 1, 1, 0.133333, 1, -2.38419e-07, -9.18284e-07, -8.9407e-08, 0.236928, -0.00795409, -0.0844881, 0.967814, 1, 1, 1, 0.266667, 1, -1.78814e-07, -6.78003e-07, -1.3411e-07, 0.125284, -0.0637347, -0.0991885, 0.985091, 1, 1, 1, 0.333333, 1, -1.01328e-06, -9.18284e-07, -1.11759e-07, 0.0657928, -0.0925845, -0.106222, 0.987834, 1, 1, 1, 0.4, 1, 6.85453e-07, -8.71718e-07, 2.30968e-07, 0.0223062, -0.113243, -0.110969, 0.987099, 1, 1, 1, 0.466667, 1, -1.78814e-07, -1.06357e-06, 3.35276e-07, -0.000939186, -0.124052, -0.113293, 0.985786, 1, 1, 1, 0.533333, 1, -2.08616e-07, -8.64267e-07, -8.9407e-08, -0.00302535, -0.125353, -0.112772, 0.985678, 1, 1, 1, 0.6, 1, -2.38419e-07, -8.28877e-07, -2.75671e-07, 0.00647114, -0.124201, -0.108103, 0.98633, 1, 1, 1, 0.666667, 1, -5.96046e-08, -8.23289e-07, -4.61936e-07, 0.0241089, -0.12224, -0.0995919, 0.987197, 1, 1, 1, 0.866667, 1, 1.78814e-07, -8.69855e-07, 5.96046e-08, 0.094239, -0.114407, -0.0657173, 0.986768, 1, 1, 1, 0.933333, 1, 2.08616e-07, -1.02073e-06, 1.56462e-07, 0.107596, -0.112858, -0.0592147, 0.985992, 1, 1, 1, 1, 1, 1.78814e-07, -8.34465e-07, -7.45058e-08, 0.112565, -0.112277, -0.0567911, 0.985646, 1, 1, 1 )
 
 [sub_resource type="BoxShape" id=22]
-extents = Vector3( 1.5, 2, 1.5 )
+extents = Vector3( 2.27665, 2, 2.55416 )
 
 [sub_resource type="SphereMesh" id=23]
 
@@ -3892,6 +3896,26 @@ anti_aliasing = false
 [sub_resource type="DynamicFont" id=25]
 size = 42
 use_filter = true
+font_data = ExtResource( 8 )
+
+[sub_resource type="SpriteFrames" id=26]
+animations = [ {
+"frames": [ ExtResource( 14 ), ExtResource( 17 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="DynamicFont" id=27]
+size = 60
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=28]
+size = 30
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 8 )
 
 [node name="Player" type="KinematicBody" groups=[
@@ -4141,7 +4165,7 @@ input_ray_pickable = false
 angular_damp = 1.0
 
 [node name="Collision_Shape" type="CollisionShape" parent="Rotation_Helper/Gun_Fire_Points/Knife_Point/Area"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.300034 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.35424 )
 shape = SubResource( 22 )
 
 [node name="Pistol_Point" type="Spatial" parent="Rotation_Helper/Gun_Fire_Points"]
@@ -4159,11 +4183,9 @@ material/0 = null
 
 [node name="Flashlight" type="SpotLight" parent="Rotation_Helper"]
 transform = Transform( 1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, -0.307539, -0.0646362 )
-visible = false
-light_color = Color( 1, 0.915375, 0.769531, 1 )
-light_energy = 0.8
-spot_range = 30.0
-spot_attenuation = 2.0
+light_color = Color( 0.976471, 0.843137, 0.619608, 1 )
+light_energy = 1.83
+spot_range = 60.0
 spot_angle = 50.0
 
 [node name="Grenade_Toss_Pos" type="Spatial" parent="Rotation_Helper"]
@@ -4172,6 +4194,11 @@ transform = Transform( 1, 0, 0, 0, 0.983001, 0.1836, 0, -0.1836, 0.983001, 0, -0
 [node name="HUD" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = -1.0
+margin_bottom = -1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Crosshair" type="Control" parent="HUD"]
 modulate = Color( 1, 1, 1, 0.705882 )
@@ -4243,6 +4270,9 @@ margin_top = 560.0
 margin_right = 370.0
 margin_bottom = 720.0
 custom_styles/panel = SubResource( 24 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Panel_border" type="Panel" parent="HUD/Panel"]
 modulate = Color( 0.679688, 0.679688, 0.679688, 1 )
@@ -4278,3 +4308,60 @@ text = "You died
 0.00 seconds till respawn"
 align = 1
 valign = 1
+
+[node name="Text" type="Control" parent="HUD"]
+visible = false
+margin_left = 438.353
+margin_top = 512.832
+margin_right = 478.353
+margin_bottom = 552.832
+rect_scale = Vector2( 0.752334, 0.752334 )
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="HUD/Text"]
+margin_left = 0.946411
+margin_top = 2.00974
+margin_right = 1057.95
+margin_bottom = 227.01
+texture = ExtResource( 15 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="AnimatedSprite" parent="HUD/Text"]
+position = Vector2( 110.247, 112.547 )
+scale = Vector2( 0.102126, 0.102126 )
+frames = SubResource( 26 )
+
+[node name="Label" type="Label" parent="HUD/Text"]
+margin_left = 227.0
+margin_top = 33.0
+margin_right = 1022.0
+margin_bottom = 199.0
+custom_fonts/font = SubResource( 27 )
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="HUD/Text"]
+margin_left = 902.814
+margin_top = 151.928
+margin_right = 1194.81
+margin_bottom = 274.928
+custom_fonts/font = SubResource( 28 )
+text = "F -->
+Tab to skip"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text_Timer" type="Timer" parent="HUD/Text"]
+wait_time = 0.05
+
+[connection signal="timeout" from="HUD/Text/Text_Timer" to="HUD/Text" method="_on_Text_Timer_timeout"]

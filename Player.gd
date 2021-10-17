@@ -460,3 +460,9 @@ func process_respawn(delta):
 
 func create_sound(sound_name, position=null):
 	globals.play_sound(sound_name, false, position)
+
+
+
+
+func talk(lines,num):
+	$HUD/Text.talk(lines,num)

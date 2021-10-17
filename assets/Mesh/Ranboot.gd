@@ -4,12 +4,13 @@ var target
 var move = "None"
 var speed = 3000
 var spin = 3 # +3 or -3
-
+var hp = 100
 var direction
+var gravity = 100
 
 func _ready():
 	randomize()
-
+	$"Health Bar".set_starting_hp(hp)
 
 func _on_Sight_body_entered(body):
 	if body.is_in_group("Player"):
@@ -20,6 +21,8 @@ func _on_Sight_body_entered(body):
 func _process(delta):
 	if target:
 		if move == "None": #Move towards player while not attacking
+			if not is_on_floor():
+				translation.y -= gravity * delta
 			look_at(target.global_transform.origin, Vector3.UP)
 			rotation_degrees.x = 0
 			direction = (target.transform.origin - transform.origin).normalized()
@@ -31,6 +34,7 @@ func _process(delta):
 
 		if move == "Tackle":
 			move_and_slide(direction * speed * delta, Vector3.UP)
+
 
 func Tackle():
 	direction = (target.transform.origin - transform.origin).normalized()
@@ -87,3 +91,10 @@ func _on_Bite_timeout():
 	if overlap.has(target):
 		print ("Bite")
 		$Bite.start()
+
+
+func bullet_hit(damage, _bullet_hit_pos):
+	hp -= damage
+	$"Health Bar".update(damage)
+	if hp <= 0:
+		queue_free()
