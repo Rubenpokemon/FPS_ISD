@@ -39,7 +39,7 @@ func _ready():
 	for i in 1:
 		spawn()
 
-func spawn():
+func spawn(): #Shuffles through enemies and spawns one
 	enemies.shuffle()
 	var spawn = enemies[0].instance()
 	spawn.translation.x = rand_range(min_x,max_x)
@@ -107,10 +107,10 @@ uv1_offset = Vector3( 0.252, 0, 0 )
 [sub_resource type="BoxShape" id=7]
 extents = Vector3( 40, 0.1, 40 )
 
-[sub_resource type="SpatialMaterial" id=14]
+[sub_resource type="SpatialMaterial" id=8]
 albedo_texture = ExtResource( 4 )
 
-[sub_resource type="BoxShape" id=13]
+[sub_resource type="BoxShape" id=9]
 extents = Vector3( 0.235268, 0.475073, 0.26352 )
 
 [node name="Boss" type="Spatial"]
@@ -229,12 +229,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.08348, -19.7007 )
 [node name="Flag" type="MeshInstance" parent="World/Props"]
 transform = Transform( 3.71531e-07, 0, -1, -7.35616, -3.21548e-07, -4.93048e-07, -3.21548e-07, 7.35616, -2.15518e-14, -69.7016, 35.3756, -14.5556 )
 mesh = ExtResource( 6 )
-material/0 = SubResource( 14 )
+material/0 = SubResource( 8 )
 
 [node name="Flag2" type="MeshInstance" parent="World/Props"]
 transform = Transform( 3.71531e-07, 0, -1, -7.35616, -3.21548e-07, -4.93048e-07, -3.21548e-07, 7.35616, -2.15518e-14, 68.8632, 35.3756, -14.5556 )
 mesh = ExtResource( 6 )
-material/0 = SubResource( 14 )
+material/0 = SubResource( 8 )
 
 [node name="Player" parent="." instance=ExtResource( 7 )]
 transform = Transform( -0.985286, 0, -0.170915, 0, 1, 0, 0.170915, 0, -0.985286, 0, 5.78465, -0.781099 )
@@ -247,7 +247,7 @@ script = ExtResource( 13 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Jones/Jones_Body"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0165473, 0.334661, -0.00526093 )
-shape = SubResource( 13 )
+shape = SubResource( 9 )
 
 [node name="HealthBar" parent="Jones/Jones_Body" instance=ExtResource( 14 )]
 transform = Transform( 0.267296, 0, 0, 0, 0.267296, 0, 0, 0, 0.267296, 0, 1.037, 0 )

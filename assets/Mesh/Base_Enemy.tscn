@@ -12,6 +12,7 @@ height = 2.33883
 
 [sub_resource type="CylinderShape" id=3]
 radius = 21.0492
+height = 9.4591
 
 [sub_resource type="BoxShape" id=4]
 extents = Vector3( 1.48176, 1, 1.89931 )

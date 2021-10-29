@@ -36,7 +36,7 @@ func _process(delta):
 			move_and_slide(direction * speed * delta, Vector3.UP)
 
 
-func Tackle():
+func Tackle(): #Moves faster for tackle move
 	direction = (target.transform.origin - transform.origin).normalized()
 	direction.y = 0
 	look_at(target.global_transform.origin, Vector3.UP)

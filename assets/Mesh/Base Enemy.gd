@@ -9,11 +9,10 @@ var damage = 5
 
 func _ready():
 	$"HealthBar".set_starting_hp(hp)
-	print ("Spawn")
+
+
 func _process(delta):
-
-
-	if target:
+	if target: #Movement
 		if not is_on_floor():
 			translation.y -= gravity * delta
 		look_at(target.global_transform.origin, Vector3.UP)
@@ -24,13 +23,13 @@ func _process(delta):
 
 
 
-func _on_Sight_body_entered(body):
+func _on_Sight_body_entered(body): #Detects PLayer
 	if body.is_in_group("Player"):
 		target = body
 		$Attack2.start()
 
 
-func bullet_hit(damage, _bullet_hit_pos):
+func bullet_hit(damage, _bullet_hit_pos): #Getting hit/ losing hp
 	hp -= damage
 	$"HealthBar".update(damage)
 	if hp <= 0:
@@ -38,12 +37,12 @@ func bullet_hit(damage, _bullet_hit_pos):
 		queue_free()
 
 
-func _on_Attack2_timeout():
+func _on_Attack2_timeout(): #Attacking
 	var colliders = $Attack.get_overlapping_bodies()
 	if colliders.has(target):
 		target.hit(damage)
 		$Attack2.start()
 
-func _on_Attack_body_entered(body):
+func _on_Attack_body_entered(body): #Attack start when player enters area
 	if body.is_in_group("Player"):
 		$Attack2.start()

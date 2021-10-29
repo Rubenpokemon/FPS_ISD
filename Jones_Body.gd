@@ -10,7 +10,7 @@ func _ready():
 	$"HealthBar".set_starting_hp(hp)
 
 
-func bullet_hit(damage, _bullet_hit_pos):
+func bullet_hit(damage, _bullet_hit_pos): #Damage
 	hp -= damage
 	$"HealthBar".update(damage)
 	if hp <= 0:

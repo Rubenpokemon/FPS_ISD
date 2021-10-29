@@ -2,7 +2,7 @@ extends Spatial
 
 
 func spawn_enemy():
-	$Enemies.spawn()
+	$Enemies.spawn() #Spawns enemies
 
 
 # Called when the node enters the scene tree for the first time.

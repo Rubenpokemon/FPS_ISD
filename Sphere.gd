@@ -4,8 +4,7 @@ extends Spatial
 var damage = 5
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready(): #Goes to a random location
 	print("Test")
 	translation.x = rand_range(-1.2,1.2)
 	translation.y = 0.93
