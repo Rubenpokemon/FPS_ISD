@@ -1,12 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/Mesh/Grey.material" type="Material" id=1]
 [ext_resource path="res://assets/Mesh/Skin.material" type="Material" id=2]
 [ext_resource path="res://assets/Mesh/Jones.obj" type="ArrayMesh" id=3]
 [ext_resource path="res://Jones.gd" type="Script" id=4]
-
-[sub_resource type="BoxShape" id=1]
-extents = Vector3( 0.304327, 0.445061, 0.602273 )
 
 [node name="Jones" type="MeshInstance"]
 transform = Transform( 16.4024, 0, 0, 0, 16.4024, 0, 0, 0, 16.4024, 0, 0, 0 )
@@ -17,11 +14,3 @@ material/2 = null
 material/3 = null
 material/4 = ExtResource( 1 )
 script = ExtResource( 4 )
-
-[node name="Area" type="Area" parent="."]
-
-[node name="CollisionShape" type="CollisionShape" parent="Area"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.380556, 0.8459 )
-shape = SubResource( 1 )
-
-[connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]

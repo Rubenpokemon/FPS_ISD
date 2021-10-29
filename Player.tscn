@@ -4266,9 +4266,10 @@ expand = true
 
 [node name="Panel" type="Panel" parent="HUD"]
 modulate = Color( 1, 1, 1, 0.705882 )
-margin_top = 560.0
+margin_top = 505.078
 margin_right = 370.0
-margin_bottom = 720.0
+margin_bottom = 665.078
+rect_scale = Vector2( 1, 1.5 )
 custom_styles/panel = SubResource( 24 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -4285,14 +4286,31 @@ custom_styles/panel = SubResource( 24 )
 [node name="Gun_label" type="Label" parent="HUD/Panel"]
 self_modulate = Color( 1, 1, 1, 0.705882 )
 margin_left = 10.0
-margin_top = 20.0
+margin_top = 5.27994
 margin_right = 380.0
-margin_bottom = 109.0
+margin_bottom = 140.28
+rect_scale = Vector2( 1, 0.8 )
 custom_fonts/font = SubResource( 25 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Health: 100
 Ammo: 000/000
 "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score_Label" type="Label" parent="HUD/Panel"]
+margin_left = 9.66838
+margin_top = 112.985
+margin_right = 126.668
+margin_bottom = 155.985
+rect_scale = Vector2( 1, 0.8 )
+custom_fonts/font = SubResource( 25 )
+custom_colors/font_color = Color( 0.752941, 0.752941, 0.752941, 1 )
+text = "Score: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Death_Screen" type="ColorRect" parent="HUD"]
 visible = false
@@ -4349,12 +4367,12 @@ __meta__ = {
 }
 
 [node name="Label2" type="Label" parent="HUD/Text"]
-margin_left = 902.814
-margin_top = 151.928
-margin_right = 1194.81
-margin_bottom = 274.928
+margin_left = 906.0
+margin_top = 152.0
+margin_right = 1195.0
+margin_bottom = 275.0
 custom_fonts/font = SubResource( 28 )
-text = "F -->
+text = "       E -->
 Tab to skip"
 autowrap = true
 __meta__ = {

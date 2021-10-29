@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Win.gd" type="Script" id=1]
+[ext_resource path="res://assets/Titillium-Regular.otf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 56
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
+
+[node name="Win" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_left = 464.386
+margin_top = 135.918
+margin_right = 736.386
+margin_bottom = 191.918
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.0313726, 1, 0, 1 )
+text = "You Won :D"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Points" type="Label" parent="."]
+margin_left = 464.386
+margin_top = 217.343
+margin_right = 736.386
+margin_bottom = 273.343
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.0313726, 1, 0, 1 )
+text = "Points"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+margin_left = 439.82
+margin_top = 307.411
+margin_right = 774.82
+margin_bottom = 369.411
+custom_fonts/font = SubResource( 1 )
+text = "Back to menu"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

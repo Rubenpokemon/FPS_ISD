@@ -4,7 +4,7 @@ var target
 var move = "None"
 var speed = 3000
 var spin = 3 # +3 or -3
-var hp = 100
+var hp = 50
 var direction
 var gravity = 100
 
@@ -97,4 +97,5 @@ func bullet_hit(damage, _bullet_hit_pos):
 	hp -= damage
 	$"Health Bar".update(damage)
 	if hp <= 0:
+		Globals.points += 100
 		queue_free()

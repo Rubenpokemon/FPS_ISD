@@ -374,6 +374,8 @@ func process_UI(delta):
 		UI_status_label.text = "HEALTH: " + str(health) + \
 				"\nAMMO: " + str(current_weapon.ammo_in_weapon) + "/" + str(current_weapon.spare_ammo) + \
 				"\n" + current_grenade + ": " + str(grenade_amounts[current_grenade])
+	$HUD/Panel/Score_Label.text = "Score: " + str(Globals.points)
+
 
 func process_reloading(delta): #Reloading
 	if reloading_weapon == true: 
@@ -402,59 +404,61 @@ func hit(damage):
 	health -= damage
 
 func process_respawn(delta):
+ #Changed to die only once
 
 	# If we've just died
 	if health <= 0 and !is_dead:
-		$Body_CollisionShape.disabled = true
-		$Feet_CollisionShape.disabled = true
+		get_tree().change_scene("res://LostScreen.tscn")
+#		$Body_CollisionShape.disabled = true
+#		$Feet_CollisionShape.disabled = true
 
-		changing_weapon = true
-		changing_weapon_name = "UNARMED"
+#		changing_weapon = true
+#		changing_weapon_name = "UNARMED"
 
-		$HUD/Death_Screen.visible = true
+#		$HUD/Death_Screen.visible = true
 
-		$HUD/Panel.visible = false
-		$HUD/Crosshair.visible = false
+#		$HUD/Panel.visible = false
+#		$HUD/Crosshair.visible = false
 
-		dead_time = RESPAWN_TIME
-		is_dead = true
+#		dead_time = RESPAWN_TIME
+#		is_dead = true
 
-		if grabbed_object != null:
-			grabbed_object.mode = RigidBody.MODE_RIGID
-			grabbed_object.apply_impulse(Vector3(0, 0, 0), -camera.global_transform.basis.z.normalized() * OBJECT_THROW_FORCE / 2)
+#		if grabbed_object != null:
+#			grabbed_object.mode = RigidBody.MODE_RIGID
+#			grabbed_object.apply_impulse(Vector3(0, 0, 0), -camera.global_transform.basis.z.normalized() * OBJECT_THROW_FORCE / 2)
 
-			grabbed_object.collision_layer = 1
-			grabbed_object.collision_mask = 1
+#			grabbed_object.collision_layer = 1
+#			grabbed_object.collision_mask = 1
 
-			grabbed_object = null
+#			grabbed_object = null
 
-	if is_dead: #Respawm Timer going down
-		dead_time -= delta
+#	if is_dead: #Respawm Timer going down
+#		dead_time -= delta
 
-		var dead_time_pretty = str(dead_time).left(3)
-		$HUD/Death_Screen/Label.text = "You died\n" + dead_time_pretty + " seconds till respawn"
+#		var dead_time_pretty = str(dead_time).left(3)
+#		$HUD/Death_Screen/Label.text = "You died\n" + dead_time_pretty + " seconds till respawn"
 
-		if dead_time <= 0: #Respawns when timer goes out
-			global_transform.origin = globals.get_respawn_position()
+#		if dead_time <= 0: #Respawns when timer goes out
+#			global_transform.origin = globals.get_respawn_position()
 
-			$Body_CollisionShape.disabled = false
-			$Feet_CollisionShape.disabled = false
+#			$Body_CollisionShape.disabled = false
+#			$Feet_CollisionShape.disabled = false
 
-			$HUD/Death_Screen.visible = false
+#			$HUD/Death_Screen.visible = false
 
-			$HUD/Panel.visible = true
-			$HUD/Crosshair.visible = true
+#			$HUD/Panel.visible = true
+#			$HUD/Crosshair.visible = true
  
-			for weapon in weapons: #Sets up the weapons
-				var weapon_node = weapons[weapon]
-				if weapon_node != null:
-					weapon_node.reset_weapon()
+#			for weapon in weapons: #Sets up the weapons
+#				var weapon_node = weapons[weapon]
+#				if weapon_node != null:
+#					weapon_node.reset_weapon()
 
-			health = 100
-			grenade_amounts = {"Grenade":2, "Sticky Grenade":2}
-			current_grenade = "Grenade"
+#			health = 100
+#			grenade_amounts = {"Grenade":2, "Sticky Grenade":2}
+#			current_grenade = "Grenade"
 
-			is_dead = false
+#			is_dead = false
 
 
 

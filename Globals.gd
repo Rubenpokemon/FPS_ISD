@@ -7,6 +7,7 @@ const MAIN_MENU_PATH = "res://Main_Menu.tscn"
 const POPUP_SCENE = preload("res://Pause_Popup.tscn")
 var popup = null
 
+var points = 0
 
 func _ready():
 	canvas_layer = CanvasLayer.new()

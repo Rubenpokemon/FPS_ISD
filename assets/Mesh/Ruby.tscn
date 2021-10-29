@@ -5,6 +5,7 @@
 [ext_resource path="res://assets/Mesh/Black_001.material" type="Material" id=3]
 [ext_resource path="res://assets/Mesh/Ruby.gd" type="Script" id=4]
 [ext_resource path="res://assets/Mesh/Ruby_Body.gd" type="Script" id=5]
+[ext_resource path="res://Healthbar3D.tscn" type="PackedScene" id=6]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Body"
@@ -238,19 +239,15 @@ tracks/10/enabled = true
 tracks/10/keys = PoolRealArray(  )
 
 [sub_resource type="CylinderShape" id=7]
-radius = 7.87805
+radius = 13.2361
 height = 1.39057
-
-[sub_resource type="CapsuleMesh" id=8]
-radius = 0.05
-mid_height = 0.001
 
 [node name="Ruby" type="Spatial"]
 transform = Transform( 8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0 )
 script = ExtResource( 4 )
 
 [node name="Roboto" type="KinematicBody" parent="."]
-transform = Transform( -0.36293, 0, 0.0115133, 0, 0.363113, 0, -0.0115133, 0, -0.36293, 0.00475073, 0.00656451, -0.159242 )
+transform = Transform( -0.36293, 0, 0.0115133, 0, 0.363113, 0, -0.0115133, 0, -0.36293, 0.005, -2, -0.159 )
 script = ExtResource( 5 )
 
 [node name="Skeleton" type="Skeleton" parent="Roboto"]
@@ -322,11 +319,15 @@ transform = Transform( -0.215456, 0, 2.98023e-08, 0, 0.215456, 0, -1.86265e-08, 
 mesh = SubResource( 4 )
 material/0 = null
 
+[node name="HealthBar" parent="Roboto" instance=ExtResource( 6 )]
+transform = Transform( 0.49018, 0, -1.21072e-08, 0, 0.49018, 0, 1.21072e-08, 0, 0.49018, 0.302951, 4.65783, 0.0152242 )
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Aiming = SubResource( 5 )
 anims/Shooting = SubResource( 6 )
 
 [node name="Sight" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.54812, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Sight"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.134266, 0.792764, 0 )
@@ -334,17 +335,6 @@ shape = SubResource( 7 )
 
 [node name="Shooting" type="Timer" parent="."]
 one_shot = true
-
-[node name="Smoke" type="CPUParticles" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.201449, 0.770779, 0 )
-emitting = false
-mesh = SubResource( 8 )
-emission_shape = 1
-emission_sphere_radius = 1.0
-gravity = Vector3( 1.269, 2.115, 0.315 )
-angular_velocity_random = 0.3
-scale_amount = 2.5
-scale_amount_random = 1.0
 
 [connection signal="body_entered" from="Sight" to="." method="_on_Sight_body_entered"]
 [connection signal="body_exited" from="Sight" to="." method="_on_Sight_body_exited"]

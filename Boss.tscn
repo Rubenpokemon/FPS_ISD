@@ -1,0 +1,263 @@
+[gd_scene load_steps=23 format=2]
+
+[ext_resource path="res://assets/Images/Bricks.jpg" type="Texture" id=1]
+[ext_resource path="res://assets/Images/Wall.jpg" type="Texture" id=2]
+[ext_resource path="res://assets/Images/Bricks_Normal.jpg" type="Texture" id=3]
+[ext_resource path="res://assets/Mesh/Lmanburg.jpg" type="Texture" id=4]
+[ext_resource path="res://assets/Images/Wall_Normal.jpg" type="Texture" id=5]
+[ext_resource path="res://assets/Mesh/Flag.obj" type="ArrayMesh" id=6]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Jones.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Ammo_Pickup.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Health_Pickup.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Boss.gd" type="Script" id=12]
+[ext_resource path="res://Jones_Body.gd" type="Script" id=13]
+[ext_resource path="res://Healthbar3D.tscn" type="PackedScene" id=14]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Spatial
+
+var among_us = preload(\"res://assets/Mesh/Base_Enemy.tscn\")
+var ruby = preload(\"res://assets/Mesh/Ruby.tscn\")
+var ranboot = preload(\"res://assets/Mesh/Ranboot.tscn\")
+
+var enemies = [among_us,ruby,ranboot]
+
+var max_x = 64
+var min_x = -64
+
+var max_z = 50
+var min_z = -90
+
+
+
+
+
+
+func _ready():
+	randomize()
+	for i in 1:
+		spawn()
+
+func spawn():
+	enemies.shuffle()
+	var spawn = enemies[0].instance()
+	spawn.translation.x = rand_range(min_x,max_x)
+	spawn.translation.y = 20
+	spawn.translation.z = rand_range(min_z,max_z)
+	add_child(spawn)
+"
+
+[sub_resource type="ProceduralSky" id=2]
+radiance_size = 4
+sky_top_color = Color( 0.472656, 0.704064, 1, 1 )
+sky_horizon_color = Color( 0.24147, 0.469106, 0.824219, 1 )
+sky_curve = 0.25
+ground_bottom_color = Color( 0.0280151, 0.0804138, 0.132812, 1 )
+ground_horizon_color = Color( 0.138657, 0.367696, 0.910156, 1 )
+ground_curve = 0.01
+sun_color = Color( 1, 0.932556, 0.867188, 1 )
+sun_energy = 16.0
+
+[sub_resource type="Environment" id=3]
+background_mode = 2
+background_sky = SubResource( 2 )
+background_sky_custom_fov = 153.6
+ambient_light_color = Color( 1, 1, 1, 1 )
+fog_color = Color( 0.313726, 0, 1, 1 )
+fog_sun_color = Color( 0.00784314, 1, 0, 1 )
+fog_sun_amount = 1.0
+fog_height_min = 0.0
+fog_height_max = 100.0
+tonemap_mode = 3
+auto_exposure_scale = 0.01
+ssao_enabled = true
+ssao_light_affect = 1.0
+dof_blur_far_distance = 24.0
+dof_blur_far_amount = 0.08
+glow_levels/1 = true
+glow_levels/2 = true
+glow_levels/5 = false
+glow_strength = 1.1
+glow_blend_mode = 0
+glow_bicubic_upscale = true
+adjustment_enabled = true
+adjustment_brightness = 0.73
+adjustment_contrast = 1.05
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_texture = ExtResource( 2 )
+normal_enabled = true
+normal_scale = 1.0
+normal_texture = ExtResource( 5 )
+uv1_scale = Vector3( 4.874, 2.213, 1 )
+
+[sub_resource type="PlaneMesh" id=5]
+size = Vector2( 80, 80 )
+
+[sub_resource type="SpatialMaterial" id=6]
+albedo_color = Color( 0.609375, 0.609375, 0.609375, 1 )
+albedo_texture = ExtResource( 1 )
+normal_enabled = true
+normal_scale = 1.0
+normal_texture = ExtResource( 3 )
+uv1_scale = Vector3( 2.191, 3.629, 1 )
+uv1_offset = Vector3( 0.252, 0, 0 )
+
+[sub_resource type="BoxShape" id=7]
+extents = Vector3( 40, 0.1, 40 )
+
+[sub_resource type="SpatialMaterial" id=14]
+albedo_texture = ExtResource( 4 )
+
+[sub_resource type="BoxShape" id=13]
+extents = Vector3( 0.235268, 0.475073, 0.26352 )
+
+[node name="Boss" type="Spatial"]
+script = ExtResource( 12 )
+
+[node name="Enemies" type="Spatial" parent="."]
+script = SubResource( 1 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 3 )
+
+[node name="World" type="Spatial" parent="."]
+
+[node name="Walls" type="Spatial" parent="World"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11.0578 )
+
+[node name="Wall" type="CSGCombiner" parent="World/Walls"]
+transform = Transform( 1, 0, 0, 0, -2.98461e-07, 1.08071, 0, -6.828, -4.72394e-08, 71.3773, 29.7006, -30.3607 )
+use_collision = true
+
+[node name="Wall" type="CSGBox" parent="World/Walls/Wall"]
+transform = Transform( 1, 0, 0, 0, 1, 2.13163e-14, 0, 3.55271e-15, 1, 0.00514984, -3.47914e-05, 1.7333 )
+snap = 0.0001
+use_collision = true
+width = 4.8262
+height = 22.9678
+depth = 61.8559
+material = SubResource( 4 )
+
+[node name="CSGBox2" type="CSGBox" parent="World/Walls/Wall"]
+transform = Transform( 3.03908, 0, 0, 0, 6.78795e-07, -1.13174, 0, -15.3191, -4.88011e-08, 0.463642, 13.7144, 17.3357 )
+operation = 2
+snap = 1.0
+use_collision = true
+width = 1.89648
+depth = 2.31883
+
+[node name="Wall2" type="CSGCombiner" parent="World/Walls"]
+transform = Transform( 1, 0, 0, 0, -2.98461e-07, 1.08071, 0, -6.828, -4.72394e-08, -72.5368, 29.7006, -30.3607 )
+use_collision = true
+
+[node name="Wall" type="CSGBox" parent="World/Walls/Wall2"]
+transform = Transform( 1, 0, 0, 0, 1, 2.13163e-14, 0, 3.55271e-15, 1, 0.00514984, -3.47914e-05, 1.7333 )
+snap = 0.0001
+use_collision = true
+width = 4.8262
+height = 22.9678
+depth = 61.8559
+material = SubResource( 4 )
+
+[node name="Wall3" type="CSGCombiner" parent="World/Walls"]
+transform = Transform( -7.54979e-08, 6.15376, 2.92173e-08, 0, -4.34909e-07, 1.08071, 1, 4.64596e-07, 2.20585e-15, -0.863352, 29.7006, 75.9591 )
+use_collision = true
+
+[node name="Wall" type="CSGBox" parent="World/Walls/Wall3"]
+transform = Transform( 1, -1.13687e-13, 6.35275e-22, -1.77636e-15, 1, 2.17604e-14, -8.47033e-22, 5.68434e-14, 1, -27.5269, -3.42727e-07, 1.55983 )
+snap = 0.0001
+use_collision = true
+width = 4.8262
+height = 22.9678
+depth = 61.8559
+material = SubResource( 4 )
+
+[node name="Wall4" type="CSGCombiner" parent="World/Walls"]
+transform = Transform( -7.54979e-08, 6.15376, 2.92173e-08, 0, -4.34909e-07, 1.08071, 1, 4.64596e-07, 2.20585e-15, -0.863352, 29.7006, -81.5596 )
+use_collision = true
+
+[node name="Wall" type="CSGBox" parent="World/Walls/Wall4"]
+transform = Transform( 1, -1.13687e-13, 6.35275e-22, -1.77636e-15, 1, 2.17604e-14, -8.47033e-22, 5.68434e-14, 1, -27.5269, -3.42727e-07, 1.55983 )
+snap = 0.0001
+use_collision = true
+width = 4.8262
+height = 22.9678
+depth = 61.8559
+material = SubResource( 4 )
+
+[node name="Floor_plane" type="MeshInstance" parent="World/Walls"]
+transform = Transform( -2, -1.73177e-05, -2.48942e-05, -3.46343e-05, 1, -8.47376e-05, -2.48957e-05, 4.23686e-05, 2, 0, 1.22582, -29.9973 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="StaticBody" type="StaticBody" parent="World/Walls/Floor_plane"]
+
+[node name="CollisionShape" type="CollisionShape" parent="World/Walls/Floor_plane/StaticBody"]
+transform = Transform( 1, 1.24653e-11, -3.63798e-12, -7.16587e-11, 1, -9.09495e-12, -2.72848e-12, 0, 1, -0.0479142, 1.32322e-05, -0.0665587 )
+shape = SubResource( 7 )
+
+[node name="Floor_plane2" type="MeshInstance" parent="World/Walls"]
+transform = Transform( 2, 1.74051e-05, 2.48942e-05, 3.48091e-05, -1, 8.47376e-05, -2.48957e-05, 4.23686e-05, 2, 0.240686, 64.2568, -30.0163 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="StaticBody" type="StaticBody" parent="World/Walls/Floor_plane2"]
+
+[node name="CollisionShape" type="CollisionShape" parent="World/Walls/Floor_plane2/StaticBody"]
+transform = Transform( 1, 1.24653e-11, -3.63798e-12, -7.16587e-11, 1, -9.09495e-12, -2.72848e-12, 0, 1, -0.0479142, 1.32322e-05, -0.0665587 )
+shape = SubResource( 7 )
+
+[node name="Props" type="Spatial" parent="World"]
+
+[node name="Ammo_Pickup" parent="World/Props" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -63.9271, 3.36877, 51.8716 )
+
+[node name="Ammo_Pickup2" parent="World/Props" instance=ExtResource( 10 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -64.676, 3.36877, -89.6238 )
+
+[node name="Ammo_Pickup3" parent="World/Props" instance=ExtResource( 10 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 59.2603, 3.36877, -89.6238 )
+
+[node name="Ammo_Pickup4" parent="World/Props" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 59.2603, 3.36877, 50.9695 )
+
+[node name="Health_Pickup" parent="World/Props" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.08348, -19.7007 )
+
+[node name="Flag" type="MeshInstance" parent="World/Props"]
+transform = Transform( 3.71531e-07, 0, -1, -7.35616, -3.21548e-07, -4.93048e-07, -3.21548e-07, 7.35616, -2.15518e-14, -69.7016, 35.3756, -14.5556 )
+mesh = ExtResource( 6 )
+material/0 = SubResource( 14 )
+
+[node name="Flag2" type="MeshInstance" parent="World/Props"]
+transform = Transform( 3.71531e-07, 0, -1, -7.35616, -3.21548e-07, -4.93048e-07, -3.21548e-07, 7.35616, -2.15518e-14, 68.8632, 35.3756, -14.5556 )
+mesh = ExtResource( 6 )
+material/0 = SubResource( 14 )
+
+[node name="Player" parent="." instance=ExtResource( 7 )]
+transform = Transform( -0.985286, 0, -0.170915, 0, 1, 0, 0.170915, 0, -0.985286, 0, 5.78465, -0.781099 )
+
+[node name="Jones" parent="." instance=ExtResource( 9 )]
+transform = Transform( 46.9132, 0, 0, 0, 46.9132, 0, 0, 0, 46.9132, 0, 0, -80 )
+
+[node name="Jones_Body" type="KinematicBody" parent="Jones"]
+script = ExtResource( 13 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Jones/Jones_Body"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0165473, 0.334661, -0.00526093 )
+shape = SubResource( 13 )
+
+[node name="HealthBar" parent="Jones/Jones_Body" instance=ExtResource( 14 )]
+transform = Transform( 0.267296, 0, 0, 0, 0.267296, 0, 0, 0, 0.267296, 0, 1.037, 0 )
+
+[node name="Cooldown" type="Timer" parent="Jones"]
+wait_time = 7.0
+one_shot = true
+
+[node name="Pop" type="Timer" parent="Jones"]
+one_shot = true
+
+[connection signal="timeout" from="Jones/Cooldown" to="Jones" method="_on_Cooldown_timeout"]
+[connection signal="timeout" from="Jones/Pop" to="Jones" method="_on_Pop_timeout"]

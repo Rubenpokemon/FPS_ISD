@@ -3,15 +3,14 @@ extends KinematicBody
 var gravity = 100
 var target
 var direction
-var speed = 500
-var hp = 100
+var speed = 1000
+var hp = 50
 var damage = 5
 
 func _ready():
 	$"HealthBar".set_starting_hp(hp)
-
+	print ("Spawn")
 func _process(delta):
-
 
 
 	if target:
@@ -35,6 +34,7 @@ func bullet_hit(damage, _bullet_hit_pos):
 	hp -= damage
 	$"HealthBar".update(damage)
 	if hp <= 0:
+		Globals.points += 100
 		queue_free()
 
 

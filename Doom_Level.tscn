@@ -1,23 +1,21 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/Mesh/Morty.obj" type="ArrayMesh" id=2]
 [ext_resource path="res://Ammo_Pickup.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/Images/Bricks.jpg" type="Texture" id=4]
-[ext_resource path="res://assets/Images/Wood.jpg" type="Texture" id=5]
+[ext_resource path="res://assets/Materials/Woodl.tres" type="Material" id=5]
 [ext_resource path="res://Ball.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Morty.gd" type="Script" id=7]
 [ext_resource path="res://assets/Images/Wall.jpg" type="Texture" id=8]
 [ext_resource path="res://assets/Images/Bricks_Normal.jpg" type="Texture" id=9]
 [ext_resource path="res://assets/Images/Wall_Normal.jpg" type="Texture" id=10]
-[ext_resource path="res://assets/Mesh/Base Enemy.tscn" type="PackedScene" id=11]
+[ext_resource path="res://assets/Mesh/Base_Enemy.tscn" type="PackedScene" id=11]
 [ext_resource path="res://assets/Mesh/Lmanburg.jpg" type="Texture" id=12]
 [ext_resource path="res://assets/Mesh/Flag.obj" type="ArrayMesh" id=13]
-[ext_resource path="res://assets/Mesh/Torch.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Portal.gd" type="Script" id=14]
 [ext_resource path="res://assets/Images/Portal.png" type="Texture" id=15]
-[ext_resource path="res://assets/Images/Wood_Normal.jpg" type="Texture" id=16]
 [ext_resource path="res://Planks.gd" type="Script" id=17]
-[ext_resource path="res://assets/Mesh/Ranboot.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Alarm_Light.gd" type="Script" id=19]
 
 [sub_resource type="PlaneMesh" id=1]
@@ -50,8 +48,6 @@ sun_energy = 16.0
 background_mode = 2
 background_sky = SubResource( 4 )
 background_sky_custom_fov = 153.6
-ambient_light_color = Color( 1, 1, 1, 1 )
-ambient_light_energy = 0.0
 fog_color = Color( 0, 0, 0, 1 )
 fog_sun_color = Color( 1, 1, 1, 1 )
 fog_sun_amount = 1.0
@@ -170,15 +166,25 @@ tracks/7/keys = {
 "method": "queue_free"
 } ]
 }
+tracks/8/type = "method"
+tracks/8/path = NodePath("../Portal2")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "show"
+} ]
+}
 
-[sub_resource type="CubeMesh" id=8]
+[sub_resource type="BoxShape" id=8]
+extents = Vector3( 4.56627, 6.50072, 1.25182 )
 
-[sub_resource type="SpatialMaterial" id=9]
-albedo_texture = ExtResource( 5 )
-normal_enabled = true
-normal_scale = 1.0
-normal_texture = ExtResource( 16 )
-uv1_scale = Vector3( 4.522, -0.306, 1 )
+[sub_resource type="CubeMesh" id=9]
 
 [sub_resource type="BoxShape" id=10]
 extents = Vector3( 1, 6.23693, 1 )
@@ -263,11 +269,25 @@ transform = Transform( -7.64606e-08, 0, 1.74922, 0, 1.74922, 0, -1.74922, 0, -7.
 visible = false
 texture = ExtResource( 15 )
 
-[node name="Ranboot" parent="NPCs" instance=ExtResource( 18 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 14.7205, 7.96083, -45.6211 )
+[node name="Portal2" type="Sprite3D" parent="NPCs"]
+transform = Transform( 1.74922, 0, -2.34479e-13, 0, 1.74922, 0, 2.34479e-13, 0, 1.74922, -2.16337, 11.7195, -70.525 )
+visible = false
+texture = ExtResource( 15 )
+script = ExtResource( 14 )
+
+[node name="Area" type="Area" parent="NPCs/Portal2"]
+
+[node name="CollisionShape" type="CollisionShape" parent="NPCs/Portal2/Area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.453344, 0, 0 )
+shape = SubResource( 8 )
+
+[node name="Base Enemy" parent="NPCs" instance=ExtResource( 11 )]
+transform = Transform( -2.66873, 0, -1.37036, 0, 3, 0, 1.37036, 0, -2.66873, -29.6381, 6.63311, -58.3861 )
+
+[node name="Base Enemy2" parent="NPCs" instance=ExtResource( 11 )]
+transform = Transform( 2.80994, 0, 1.05082, 0, 3, 0, -1.05082, 0, 2.80994, -25.9276, 6.63311, -48.9033 )
 
 [node name="Prop" type="Spatial" parent="."]
-visible = false
 
 [node name="Planks" type="KinematicBody" parent="Prop"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2353, 28.5514 )
@@ -275,18 +295,18 @@ script = ExtResource( 17 )
 
 [node name="Plank" type="MeshInstance" parent="Prop/Planks"]
 transform = Transform( 11.5771, 0.541215, 0, -3.04798, 2.05568, 0, 0, 0, 0.236227, -1.52701, 7.19072, -19.9038 )
-mesh = SubResource( 8 )
-material/0 = SubResource( 9 )
+mesh = SubResource( 9 )
+material/0 = ExtResource( 5 )
 
 [node name="Plank2" type="MeshInstance" parent="Prop/Planks"]
 transform = Transform( 11.3442, -0.679111, 0, 3.82458, 2.01433, 0, 0, 0, 0.236227, -2.45959, 21.9522, -19.9038 )
-mesh = SubResource( 8 )
-material/0 = SubResource( 9 )
+mesh = SubResource( 9 )
+material/0 = ExtResource( 5 )
 
 [node name="Plank3" type="MeshInstance" parent="Prop/Planks"]
 transform = Transform( 7.18413, 1.70043, 0, -9.57636, 1.27565, 0, 0, 0, 0.236227, -1.44604, 14.9458, -19.872 )
-mesh = SubResource( 8 )
-material/0 = SubResource( 9 )
+mesh = SubResource( 9 )
+material/0 = ExtResource( 5 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Prop/Planks"]
 transform = Transform( 11.9716, 0, 0, 0, 2.12573, 0, 0, 0, 0.236227, -1.52701, 13.703, -19.9038 )
@@ -296,36 +316,18 @@ shape = SubResource( 10 )
 wait_time = 5.0
 one_shot = true
 
-[node name="Torch" parent="Prop" instance=ExtResource( 14 )]
-transform = Transform( -4.74085e-08, 0, -1.08458, 0, 1.08458, 0, 1.08458, 0, -4.74085e-08, 39.0513, 15.0139, -43.773 )
-
-[node name="Torch2" parent="Prop" instance=ExtResource( 14 )]
-transform = Transform( -4.74085e-08, 0, -1.08458, 0, 1.08458, 0, 1.08458, 0, -4.74085e-08, 39.0513, 15.0139, -1.27377 )
-
-[node name="Torch3" parent="Prop" instance=ExtResource( 14 )]
-transform = Transform( -4.74085e-08, 0, -1.08458, 0, 1.08458, 0, 1.08458, 0, -4.74085e-08, 39.0513, 15.0139, 41.6684 )
-
-[node name="Torch4" parent="Prop" instance=ExtResource( 14 )]
-transform = Transform( -4.74085e-08, 0, 1.08458, 0, 1.08458, 0, -1.08458, 0, -4.74085e-08, -40.1961, 15.0139, 41.6684 )
-
-[node name="Torch5" parent="Prop" instance=ExtResource( 14 )]
-transform = Transform( -4.74085e-08, 0, 1.08458, 0, 1.08458, 0, -1.08458, 0, -4.74085e-08, -40.1961, 15.0139, -0.83087 )
-
-[node name="Torch6" parent="Prop" instance=ExtResource( 14 )]
-transform = Transform( -4.74085e-08, 0, 1.08458, 0, 1.08458, 0, -1.08458, 0, -4.74085e-08, -40.1961, 15.0139, -43.773 )
-
 [node name="Flag" type="MeshInstance" parent="Prop"]
 transform = Transform( -7.38455e-08, 0, -1, 0, 2.58898, 0, 2.58898, 0, -6.69876e-08, -41.0233, 26, 23.4026 )
 mesh = ExtResource( 13 )
 material/0 = SubResource( 11 )
 
 [node name="Flag2" type="MeshInstance" parent="Prop"]
-transform = Transform( -7.38455e-08, 0, -1, 0, 2.58898, 0, 2.58898, 0, -6.69876e-08, -41.0233, 32.9641, -43.6573 )
+transform = Transform( -7.38455e-08, 0, -1, 0, 2.58898, 0, 2.58898, 0, -6.69876e-08, -41.0233, 23.0519, -33.1009 )
 mesh = ExtResource( 13 )
 material/0 = SubResource( 11 )
 
 [node name="Flag3" type="MeshInstance" parent="Prop"]
-transform = Transform( -1.5249e-07, 0, 1, 0, 2.58898, 0, -2.58898, 0, -2.04352e-08, 39.7632, 33.1934, -43.676 )
+transform = Transform( -1.5249e-07, 0, 1, 0, 2.58898, 0, -2.58898, 0, -2.04352e-08, 39.7632, 23.2812, -33.1196 )
 mesh = ExtResource( 13 )
 material/0 = SubResource( 11 )
 
@@ -419,9 +421,6 @@ height = 22.9678
 depth = 61.8559
 material = SubResource( 12 )
 
-[node name="Base Enemy" parent="." instance=ExtResource( 11 )]
-transform = Transform( -3, 0, -2.62268e-07, 0, 3, 0, 2.62268e-07, 0, -3, -20.365, 5.99698, -35.9307 )
-
 [node name="Alarm_Light" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 30.3437, -32.1527 )
 light_color = Color( 1, 0, 0, 1 )
@@ -432,4 +431,5 @@ omni_range = 70.0
 script = ExtResource( 19 )
 
 [connection signal="body_entered" from="NPCs/Morty/Area" to="NPCs/Morty" method="_on_Area_body_entered"]
+[connection signal="body_entered" from="NPCs/Portal2/Area" to="NPCs/Portal2" method="_on_Area_body_entered"]
 [connection signal="timeout" from="Prop/Planks/Timer" to="Prop/Planks" method="_on_Timer_timeout"]

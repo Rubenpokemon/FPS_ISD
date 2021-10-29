@@ -15,6 +15,7 @@ func _process(delta):
 		look_at(target.global_transform.origin, Vector3.UP)
 		rotation_degrees.x = 0
 
+
 func _on_Sight_body_entered(body):
 	if body.is_in_group("Player"):
 		print("Player Spotted")
